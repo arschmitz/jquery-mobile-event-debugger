@@ -6,7 +6,8 @@ A debugging tool for jQuery Mobile Events which ties into the API docs
 ## Usage
 
 Call the debugger should be done immediately after mobile library is loaded or in mobileinit handler
-```$.mobile.eventLogger([options]);```
+
+`$.mobile.eventLogger([options]);`
 
 ## Options
 
