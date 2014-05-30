@@ -1,3 +1,37 @@
 {
-  "version": "0.0.1"
+  "name": "jquery-mobile-event-debugger",
+  "title": "jQuery Mobile Event Debugger",
+  "description": "Utility for debugging events in jQuery mobile",
+  "version": "0.0.1",
+  "homepage": "http://uglymongrel.com",
+  "author": {
+    "name": "Alexander Schmitz and other contributors",
+    "url": "https://github.com/arschmitz/jquery-mobile-event-debugger/blob/master/AUTHORS.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arschmitz/jquery-mobile-event-debugger/"
+  },
+  "bugs": "https://github.com/arschmitz/jquery-mobile-event-debugger/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/arschmitz/jquery-mobile-event-debugger/blob/master/MIT-LICENSE.txt"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.8.3",
+    "jquery-mobile": ">=1.4.3"
+  },
+  "devDependencies": {},
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "ci": "grunt test coveralls",
+    "test": "grunt test",
+    "lint": "grunt jshint"
+  },
+  "keywords": []
 }

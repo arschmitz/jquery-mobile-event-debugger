@@ -1,0 +1,41 @@
+{
+    "name": "event-debugger",
+    "title": "jQuery Mobile Event Debugger",
+    "description": "jQuery Mobile plugin for debugging jQuery mobile events integrates with the api docs for event usage and descriptions",
+    "keywords": [
+        "mobile",
+        "events",
+        "event",
+        "page",
+        "widget",
+        "tools",
+        "debugger",
+        "debug"
+    ],
+    "version": "0.1.0",
+    "author": {
+        "name": "Alexander Schmitz and other contributors",
+        "url": "https://github.com/arschmitz/jquery-mobile-event-debugger"
+    },
+    "maintainers": [
+        {
+            "name": "Alexander Schmitz",
+            "email": "arschmitz@gmail.com",
+            "url": "http://uglymongrel.com"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/arschmitz/jquery-mobile-event-debugger/blob/master/LICENSE"
+        }
+    ],
+    "bugs": "https://github.com/arschmitz/jquery-mobile-event-debugger/issues",
+    "homepage": "https://github.com/arschmitz/jquery-mobile-event-debugger",
+    "docs": "https://github.com/arschmitz/jquery-mobile-event-debugger",
+    "download": "https://github.com/arschmitz/jquery-mobile-event-debugger",
+    "dependencies": {
+        "jquery": ">=1.8",
+        "jquery-mobile": ">=1.4.0"
+    }
+}
