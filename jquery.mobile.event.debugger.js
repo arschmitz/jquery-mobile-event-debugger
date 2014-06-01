@@ -1,4 +1,31 @@
-(function( $, undefined ) {
+/*!
+ * jQuery Mobile Event Debugger
+ * http://uglymongrel.com.com
+ *
+ * Copyright 2014 Alexander Schmitz and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ *
+ * http://api.uglymongrel.com.com/jquery-mobile-event-debugger/
+ */
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+//>>description: Utility for debugging events in jQuery Mobile.
+//>>label: Event Debugger
+//>>group: Utilities
+//>>excludeEnd("jqmBuildExclude");
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+
+	// AMD. Register as an anonymous module.
+	define([
+		"jquery",
+	], factory );
+  } else {
+
+	// Browser globals
+	factory( jQuery );
+  }
+}(function( $ ) {
 	$.ajaxSetup({ cache: true });
 	function elementString( ele, omitData ) {
 		var element = "<";
@@ -196,4 +223,7 @@
 			}
 		});
 	};
-})( jQuery );
+
+return $.mobile.eventLogger;
+
+}));
