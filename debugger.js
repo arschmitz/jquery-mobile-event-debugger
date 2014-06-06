@@ -1,19 +1,19 @@
 (function( $, undefined ) {
-	$.ajaxSetup({ cache: true});
+	$.ajaxSetup({ cache: true });
 	function elementString( ele, omitData ) {
 		var element = "<";
-		//console.log( ele[0] );
-		if( ele[0] !== undefined ) {
-			element += ele[0].tagName.toLowerCase();
+		//console.log( ele[ 0 ] );
+		if( ele[ 0 ] !== undefined ) {
+			element += ele[ 0 ].tagName.toLowerCase();
 		}
 
-		if( ele.attr( "id" ) !== undefined ){
+		if( ele.attr( "id" ) !== undefined ) {
 			element += " id=\"" + ele.attr( "id" ) + "\"";
 		}
-		if( ele.attr( "id" ) !== undefined ){
+		if( ele.attr( "id" ) !== undefined ) {
 			element += " class=\"" + ele.attr( "class" ) + "\"";
 		}
-		if( ele[0] !== undefined ) {
+		if( ele[ 0 ] !== undefined ) {
 			$.each( ele[ 0 ].dataset, function( key, value ) {
 				element += " data-" + key + "=\"" + value + "=\"";
 			});
@@ -28,24 +28,23 @@
 		touch = /^scroll|^swipe|^tap/,
 		layout = /^throttled|^update|^orientation/,
 		page = /^page/,
-		navigation = /^hashchange|^navigate/;;
+		navigation = /^hashchange|^navigate/;
 	function getDocs( location ) {
 		$.ajax( location, {
-			success: function( data ){
+			success: function( data ) {
 				docs = $.parseXML( data );
-				$( docs ).find( "[type='widget']").each( function(){
+				$( docs ).find( "[type='widget']").each( function() {
 					var title = $( this ).attr( "event-prefix" );
-					widgets[ title ] = {
-					};
-					$( this ).find( "event" ).each(function(){
+					widgets[ title ] = {};
+					$( this ).find( "event" ).each( function() {
 						widgets[ title ][ $( this ).attr( "name" ) ] = {
 							"name": $( this ).attr( "name" ),
 							"description": $( this ).find( "desc" ).text(),
 							"deprecated" : $( this ).is( "[deprecated]" )
 						};
-					})
+					});
 				});
-				$( docs ).find( "[type='event']" ).each( function(){
+				$( docs ).find( "[type='event']" ).each( function() {
 					var name = $( this ).attr( "name" )
 					if ( page.test( name ) ) {
 						addEvent( "page", this );
@@ -61,7 +60,7 @@
 						addEvent( "other", this );
 					}
 					function addEvent( type, event ) {
-						if( typeof events[ type ] === "undefined" ){
+						if( typeof events[ type ] === "undefined" ) {
 							events[ type ] = {}
 						}
 						events[ type ][ $( event ).attr( "name" ) ] = {
@@ -74,8 +73,8 @@
 				jsonDocs = {
 					events: events,
 					widgets: widgets
-				}
-				console.log( jsonDocs )
+				};
+				console.log( jsonDocs );
 			},
 			async: false,
 			cache: true,
@@ -84,7 +83,7 @@
 			}
 		});
 	}
-	$.mobile.eventLogger = function( userOptions ){
+	$.mobile.eventLogger = function( userOptions ) {
 		var options,
 			eventString = "",
 			boundEvents = {},
@@ -111,7 +110,7 @@
 		getDocs( options.location );
 
 		$.extend( options, userOptions );
-		$.each( options.events, function( name, add ){
+		$.each( options.events, function( name, add ) {
 			if( add ) {
 				$.each( jsonDocs.events[ name ], function( key, value ) {
 					if( options.deprecated || !value.deprecated ) {
@@ -120,7 +119,7 @@
 				});
 			}
 		});
-		$.each( options.widgets, function( name, add ){
+		$.each( options.widgets, function( name, add ) {
 			if( add ) {
 				$.each( jsonDocs.widgets[ name ], function( key, value ) {
 					if( options.deprecated || !value.deprecated ) {
@@ -132,13 +131,13 @@
 		$.each( boundEvents, function( name, value ) {
 			eventString += " " + name;
 		});
-		$( document ).on( eventString , function( event, ui ){
+		$( document ).on( eventString , function( event, ui ) {
 			var message,
 				toPage = "",
 				data = $.extend( "", ui );
 			if ( ui ) {
 				if( ui.toPage !== undefined ) {
-					if( ui.toPage.jquery !== undefined ){
+					if( ui.toPage.jquery !== undefined ) {
 						data.toPage = elementString( ui.toPage );
 					} else {
 						data.toPage = ui.toPage;
@@ -146,7 +145,7 @@
 				}
 				if( ui.prevPage !== undefined ) {
 					if( ui.prevPage !== undefined && ui.prevPage.jquery
-						!== undefined && ui.prevPage.length > 0 ){
+						!== undefined && ui.prevPage.length > 0 ) {
 						data.prevPage = elementString( ui.prevPage );
 					} else {
 						data.prevPage = ui.prevPage;
@@ -169,10 +168,10 @@
 			});
 			if ( options.showAlert ) {
 				alert(
-					JSON.stringify( message ,null ,2 )
+					JSON.stringify( message, null, 2 )
 						.replace( /\\t/g, "    " )
 						.replace( /\\n/g, "\n" )
-						.replace( /\\\"/g,"\"")
+						.replace( /\\\"/g,"\"" )
 				);
 			}
 		});
