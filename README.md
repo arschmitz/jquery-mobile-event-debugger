@@ -18,27 +18,27 @@ Show Deprecated events
 
 an object containing the following properties:
 
-##### Page ( Default: false ):
+#### Page ( Default: false ):
 
 Show page events ( these are events prefixed with "page" that are not triggered by the page widget )
 
-##### Touch ( Default: false ):
+#### Touch ( Default: false ):
 
 Show touch events
 
-##### Vmouse ( Default: false ):
+#### Vmouse ( Default: false ):
 
 Show vmouse events
 
-##### layout ( Default: false ):
+#### layout ( Default: false ):
 
 Show layout events ( updatelayout, orientationchange, throttledresize )
 
-##### navigation ( Default: false ):
+#### navigation ( Default: false ):
 
 show navigation events ( navigate, hashchange )
 
-#### showAlert ( Default: false ):
+### showAlert ( Default: false ):
 
 show alerts of the events and associated information
 

@@ -28,7 +28,7 @@
 		touch = /^scroll|^swipe|^tap/,
 		layout = /^throttled|^update|^orientation/,
 		page = /^page/,
-		navigation = /^hashchange|^navigate/;;
+		navigation = /^hashchange|^navigate/;
 	function getDocs( location ) {
 		$.ajax( location, {
 			success: function( data ){
@@ -41,12 +41,16 @@
 						widgets[ title ][ $( this ).attr( "name" ) ] = {
 							"name": $( this ).attr( "name" ),
 							"description": $( this ).find( "desc" ).text(),
-							"deprecated" : $( this ).is( "[deprecated]" )
+							"deprecated" : $( this ).attr( "deprecated" ),
+							"warning" : $( event ).find( ".warning" ).text()
 						};
-					})
+						if( $( event ).is( "[deprecated]" ) ) {
+							widgets[ title ][ $( this ).attr( "name" ) ][ "deprecated" ] = $( this ).attr( "deprecated" );
+						}
+					});
 				});
 				$( docs ).find( "[type='event']" ).each( function(){
-					var name = $( this ).attr( "name" )
+					var name = $( this ).attr( "name" );
 					if ( page.test( name ) ) {
 						addEvent( "page", this );
 					} else if( vmouse.test( name ) ) {
@@ -62,20 +66,23 @@
 					}
 					function addEvent( type, event ) {
 						if( typeof events[ type ] === "undefined" ){
-							events[ type ] = {}
+							events[ type ] = {};
 						}
 						events[ type ][ $( event ).attr( "name" ) ] = {
 							"name" : $( event ).attr( "name" ),
 							"description" : $( event ).find( "desc" ).text(),
-							"deprecated" : $( event ).is( "[deprecated]" )
+							"deprecated" : $( event ).attr( "deprecated" ),
+							"warning" : $( event ).find( ".warning" ).html()
 						};
+						if( $( event ).is( "[deprecated]" ) ) {
+							events[ type ][ $( event ).attr( "name" ) ][ "deprecated" ] = $( event ).attr( "deprecated" );
+						}
 					}
 				});
 				jsonDocs = {
 					events: events,
 					widgets: widgets
-				}
-				console.log( jsonDocs )
+				};
 			},
 			async: false,
 			cache: true,
@@ -107,7 +114,7 @@
 				layout: false,
 				navigation: false
 			}
-		}
+		};
 		getDocs( options.location );
 
 		$.extend( options, userOptions );
@@ -115,7 +122,11 @@
 			if( add ) {
 				$.each( jsonDocs.events[ name ], function( key, value ) {
 					if( options.deprecated || !value.deprecated ) {
-						boundEvents[ value.name ] = value.description;
+						boundEvents[ value.name ] = {
+							description: value.description,
+							deprecated: value.deprecated,
+							warning: value.warning
+						}
 					}
 				});
 			}
@@ -124,7 +135,11 @@
 			if( add ) {
 				$.each( jsonDocs.widgets[ name ], function( key, value ) {
 					if( options.deprecated || !value.deprecated ) {
-						boundEvents[ name + value.name ] = value.description;
+						boundEvents[ name + value.name ] = {
+							description: value.description,
+							deprecated: value.deprecated,
+							warning: value.warning
+						};
 					}
 				});
 			}
@@ -135,7 +150,8 @@
 		$( document ).on( eventString , function( event, ui ){
 			var message,
 				toPage = "",
-				data = $.extend( "", ui );
+				data = $.extend( {}, ui ),
+				logData = $.extend( {}, ui );
 			if ( ui ) {
 				if( ui.toPage !== undefined ) {
 					if( ui.toPage.jquery !== undefined ){
@@ -145,8 +161,8 @@
 					}
 				}
 				if( ui.prevPage !== undefined ) {
-					if( ui.prevPage !== undefined && ui.prevPage.jquery
-						!== undefined && ui.prevPage.length > 0 ){
+					if( ui.prevPage !== undefined && ui.prevPage.jquery !==
+					undefined && ui.prevPage.length > 0 ){
 						data.prevPage = elementString( ui.prevPage );
 					} else {
 						data.prevPage = ui.prevPage;
@@ -158,14 +174,18 @@
 					target : elementString( $( event.target ), true ),
 					type : event.type
 				},
-				description: boundEvents[ event.type ],
+				description: boundEvents[ event.type ].description,
+				deprecated: boundEvents[ event.type ].deprecated,
+				warnings: boundEvents[ event.type ].warning,
 				ui : data
-			}
+			};
 			console.log({
 				eventName: event.type,
-				description: boundEvents[ event.type ],
+				description: boundEvents[ event.type ].description,
+				deprecated: boundEvents[ event.type ].deprecated,
+				warnings: boundEvents[ event.type ].warning,
 				event: event,
-				ui: ui
+				ui: logData
 			});
 			if ( options.showAlert ) {
 				alert(
