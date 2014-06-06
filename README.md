@@ -14,7 +14,7 @@ Call the debugger. This should be done immediately after mobile library is loade
 ### Deprecated ( Default: false ):
 
 Show Deprecated events
-### Events ( Type: Object)
+### Events ( Type: Object )
 
 An object containing the following properties:
 
@@ -45,7 +45,7 @@ Show alerts of the events and associated information
 This is useful if you want to pause execution to to inspect the current state of the page or if you
 are on a mobile device without the ability to view the console log.
 
-### Widgets ( Default: empty object)
+### Widgets ( Default: empty object )
 
 An object containing which widgets to log events for. Add a widget name as the prop and
 set it to true to show events associated with this widget.
