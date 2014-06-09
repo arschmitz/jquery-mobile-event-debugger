@@ -30,17 +30,17 @@
 	function elementString( ele, omitData ) {
 		var element = "<";
 		//console.log( ele[ 0 ] );
-		if( ele[ 0 ] !== undefined ) {
+		if ( ele[ 0 ] !== undefined ) {
 			element += ele[ 0 ].tagName.toLowerCase();
 		}
 
-		if( ele.attr( "id" ) !== undefined ) {
+		if ( ele.attr( "id" ) !== undefined ) {
 			element += " id=\"" + ele.attr( "id" ) + "\"";
 		}
-		if( ele.attr( "id" ) !== undefined ) {
+		if ( ele.attr( "id" ) !== undefined ) {
 			element += " class=\"" + ele.attr( "class" ) + "\"";
 		}
-		if( ele[ 0 ] !== undefined ) {
+		if ( ele[ 0 ] !== undefined ) {
 			$.each( ele[ 0 ].dataset, function( key, value ) {
 				element += " data-" + key + "=\"" + value + "=\"";
 			});
@@ -70,7 +70,7 @@
 							"deprecated" : $( this ).attr( "deprecated" ),
 							"warning" : $( event ).find( ".warning" ).text()
 						};
-						if( $( event ).is( "[deprecated]" ) ) {
+						if ( $( event ).is( "[deprecated]" ) ) {
 							widgets[ title ][ $( this ).attr( "name" ) ][ "deprecated" ] = $( this ).attr( "deprecated" );
 						}
 					});
@@ -79,19 +79,19 @@
 					var name = $( this ).attr( "name" );
 					if ( page.test( name ) ) {
 						addEvent( "page", this );
-					} else if( vmouse.test( name ) ) {
+					} else if ( vmouse.test( name ) ) {
 						addEvent( "vmouse", this );
-					} else if( touch.test( name ) ) {
+					} else if ( touch.test( name ) ) {
 						addEvent( "touch", this );
-					} else if( layout.test( name ) ) {
+					} else if ( layout.test( name ) ) {
 						addEvent( "layout", this );
-					} else if( navigation.test( name ) ) {
+					} else if ( navigation.test( name ) ) {
 						addEvent( "navigation", this );
 					} else {
 						addEvent( "other", this );
 					}
 					function addEvent( type, event ) {
-						if( typeof events[ type ] === "undefined" ){
+						if ( typeof events[ type ] === "undefined" ){
 							events[ type ] = {};
 						}
 						events[ type ][ $( event ).attr( "name" ) ] = {
@@ -100,7 +100,7 @@
 							"deprecated" : $( event ).attr( "deprecated" ),
 							"warning" : $( event ).find( ".warning" ).html()
 						};
-						if( $( event ).is( "[deprecated]" ) ) {
+						if ( $( event ).is( "[deprecated]" ) ) {
 							events[ type ][ $( event ).attr( "name" ) ][ "deprecated" ] = $( event ).attr( "deprecated" );
 						}
 					}
@@ -145,22 +145,22 @@
 
 		$.extend( options, userOptions );
 		$.each( options.events, function( name, add ) {
-			if( add ) {
+			if ( add ) {
 				$.each( jsonDocs.events[ name ], function( key, value ) {
-					if( options.deprecated || !value.deprecated ) {
+					if ( options.deprecated || !value.deprecated ) {
 						boundEvents[ value.name ] = {
 							description: value.description,
 							deprecated: value.deprecated,
 							warning: value.warning
-						}
+						};
 					}
 				});
 			}
 		});
 		$.each( options.widgets, function( name, add ) {
-			if( add ) {
+			if ( add ) {
 				$.each( jsonDocs.widgets[ name ], function( key, value ) {
-					if( options.deprecated || !value.deprecated ) {
+					if ( options.deprecated || !value.deprecated ) {
 						boundEvents[ name + value.name ] = {
 							description: value.description,
 							deprecated: value.deprecated,
@@ -179,16 +179,16 @@
 				data = $.extend( {}, ui ),
 				logData = $.extend( {}, ui );
 			if ( ui ) {
-				if( ui.toPage !== undefined ) {
-					if( ui.toPage.jquery !== undefined ) {
+				if ( ui.toPage !== undefined ) {
+					if ( ui.toPage.jquery !== undefined ) {
 						data.toPage = elementString( ui.toPage );
 					} else {
 						data.toPage = ui.toPage;
 					}
 				}
-				if( ui.prevPage !== undefined ) {
-					if( ui.prevPage !== undefined && ui.prevPage.jquery
-						!== undefined && ui.prevPage.length > 0 ) {
+				if ( ui.prevPage !== undefined ) {
+					if ( ui.prevPage !== undefined && ui.prevPage.jquery !== undefined &&
+					ui.prevPage.length > 0 ) {
 						data.prevPage = elementString( ui.prevPage );
 					} else {
 						data.prevPage = ui.prevPage;
