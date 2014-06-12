@@ -29,7 +29,6 @@
 	$.ajaxSetup({ cache: true });
 	function elementString( ele, omitData ) {
 		var element = "<";
-		//console.log( ele[ 0 ] );
 		if ( ele[ 0 ] !== undefined ) {
 			element += ele[ 0 ].tagName.toLowerCase();
 		}
@@ -42,7 +41,7 @@
 		}
 		if ( ele[ 0 ] !== undefined ) {
 			$.each( ele[ 0 ].dataset, function( key, value ) {
-				element += " data-" + key + "=\"" + value + "=\"";
+				element += " data-" + key + "=\"" + value + "\"";
 			});
 		}
 		element += ">";
@@ -178,21 +177,37 @@
 				toPage = "",
 				data = $.extend( {}, ui ),
 				logData = $.extend( {}, ui );
+
+			console.log({
+				eventName: event.type,
+				description: boundEvents[ event.type ].description,
+				deprecated: boundEvents[ event.type ].deprecated,
+				warnings: boundEvents[ event.type ].warning,
+				event: event,
+				ui: logData
+			});
 			if ( ui ) {
-				if ( ui.toPage !== undefined ) {
-					if ( ui.toPage.jquery !== undefined ) {
-						data.toPage = elementString( ui.toPage );
-					} else {
-						data.toPage = ui.toPage;
+				$.each( data, function( index, value ) {
+					if ( data[ index ] !== undefined ) {
+						if ( data[ index ] !== undefined && data[ index ].jquery !== undefined &&
+						data[ index ].length > 0 ) {
+							data[ index ] = elementString( data[ index ] );
+						} else {
+							data[ index ] = data[ index ];
+						}
 					}
-				}
-				if ( ui.prevPage !== undefined ) {
-					if ( ui.prevPage !== undefined && ui.prevPage.jquery !== undefined &&
-					ui.prevPage.length > 0 ) {
-						data.prevPage = elementString( ui.prevPage );
-					} else {
-						data.prevPage = ui.prevPage;
-					}
+				});
+				if( data.options !== undefined ) {
+					$.each( data.options, function( index, value ) {
+						if ( data.options[ index ] !== undefined ) {
+							if ( data.options[ index ] !== undefined && data.options[ index ].jquery !== undefined &&
+							data.options[ index ].length > 0 ) {
+								data.options[ index ] = elementString( data.options[ index ] );
+							} else {
+								data.options[ index ] = data.options[ index ];
+							}
+						}
+					});
 				}
 			}
 			message = {
@@ -205,14 +220,7 @@
 				warnings: boundEvents[ event.type ].warning,
 				ui : data
 			};
-			console.log({
-				eventName: event.type,
-				description: boundEvents[ event.type ].description,
-				deprecated: boundEvents[ event.type ].deprecated,
-				warnings: boundEvents[ event.type ].warning,
-				event: event,
-				ui: logData
-			});
+			
 			if ( options.showAlert ) {
 				alert(
 					JSON.stringify( message, null, 2 )
