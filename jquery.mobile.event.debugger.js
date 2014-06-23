@@ -97,7 +97,7 @@
 							"name" : $( event ).attr( "name" ),
 							"description" : $( event ).find( "desc" ).text(),
 							"deprecated" : $( event ).attr( "deprecated" ),
-							"warning" : $( event ).find( ".warning" ).html()
+							"warning" : $( event ).find( ".warning" ).text()
 						};
 						if ( $( event ).is( "[deprecated]" ) ) {
 							events[ type ][ $( event ).attr( "name" ) ][ "deprecated" ] = $( event ).attr( "deprecated" );
